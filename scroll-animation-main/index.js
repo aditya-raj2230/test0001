@@ -14,8 +14,7 @@ const canvas = document.getElementById("three-canvas");
 const renderer = new THREE.WebGLRenderer({ antialias: true, canvas });
 renderer.setSize(w, h);
 renderer.setClearColor(new THREE.Color(0xf0f0f0), 1); // Soft gray background
-renderer.shadowMap.enabled = true;
-renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+renderer.shadowMap.enabled = false;
 
 // Lighting
 const ambientLight = new THREE.AmbientLight(0xffffff, 0.5); // Softer ambient light
@@ -23,14 +22,12 @@ scene.add(ambientLight);
 
 const directionalLight = new THREE.DirectionalLight(0xffffff, 0.7); // Key light
 directionalLight.position.set(5, 10, 7);
-directionalLight.castShadow = true;
-directionalLight.shadow.mapSize.width = 2048; // Higher resolution shadows
-directionalLight.shadow.mapSize.height = 2048;
+directionalLight.castShadow = false;
 scene.add(directionalLight);
 
 const pointLight = new THREE.PointLight(0xffffff, 0.6, 30); // Focused light for better text visibility
 pointLight.position.set(0, 2, 5);
-pointLight.castShadow = true;
+pointLight.castShadow = false;
 scene.add(pointLight);
 
 const hemisphereLight = new THREE.HemisphereLight(0xffffff, 0x444444, 0.4); // Sky and ground light
@@ -73,10 +70,11 @@ function initScene({ geo }) {
   });
 
   const mesh = new THREE.Mesh(geometry, material);
-  mesh.scale.set(0.4, 0.4, 0.4);
+  mesh.scale.set(0.35, 0.35, 0.35);
   mesh.rotation.y = Math.PI / 2;
-  mesh.castShadow = true;
-  mesh.receiveShadow = true;
+  mesh.position.set(6.5, 0, 0);
+  mesh.castShadow = false;
+  mesh.receiveShadow = false;
   scene.add(mesh);
 
   let goalPos = Math.PI / 2;
